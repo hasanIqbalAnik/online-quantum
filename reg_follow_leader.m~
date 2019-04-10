@@ -1,0 +1,5 @@
+% Regret minimization using Regularized follow the leader algorithm
+
+% define regret: sum of all losses from prediction minus sum of all losses
+% when the true state was the worst for us
+% r_t = sum(
