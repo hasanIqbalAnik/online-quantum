@@ -8,7 +8,7 @@ Es = {}; % cell array to store matrices
 ctr = 1;
 for i = 0:10
 m = rand(2) + 1j * rand(2);
-E = (m + m') / 2;
+E = (m + m') / 2; % random hermitian matrix
 
 es = eig(E);
 if all(es >=  0) && all(es <= 1)
