@@ -1,2 +1,2 @@
 # online-quantum
-Online Learning of Quantum States
+Implementation of [https://arxiv.org/pdf/1802.09025.pdf](Online Learning of Quantum States)
