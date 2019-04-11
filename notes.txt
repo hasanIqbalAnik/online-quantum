@@ -1,0 +1,3 @@
+Integrating Von Neumann Entropy in the optimization equation is not available in cvx off the shelf. We have to figure out a way to get around it or discard it altogether. Right now we are using a function for the maximum eigenvalue of optimizing variable. This function is provided by cvx itself. 
+
+Although for a L-Lipschitz function, L value should be known previously, in our case, the function is a loss function. So we are calculating the L value only after we have made our prediction. It's just maximum value for 2 * (all differences of our prediction and true value). This may not be the correct case, but we are proceeding in this way for now. 
