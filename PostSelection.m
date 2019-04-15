@@ -2,7 +2,7 @@ function PostSelectOp = PostSelection(st, E)
     Z = {[1;0], [0;1]};
     U = PostSelectionU(E);
     PI = kron(eye(2), Z{1}*Z{1}');
-    UPU = U'*PI*U; 
+    UPU = U'*PI*U;
     inner = UPU * kron(st, Z{1}*Z{1}') * UPU;
     PostSelectOp = (1/trace(E*st)) * PartialTrace(inner);
 end
@@ -18,7 +18,7 @@ function PostUOp = PostSelectionU(MO)
 end
 
 function SqrtOp = SqrtMat(Operator)
-    [V,D,W] = eig(Operator);
+    [V,~,~] = eig(Operator);
     es = eig(Operator);
     SqrtOp = [0,0;0,0];
     for idx = (1:numel(es))
