@@ -1,4 +1,4 @@
-function [Es, bs, rho] = generate_data(s)
+function [Es, bs, rho, L] = generate_data(s)
 
 % Generate test state
 psi = sqrt(5 / 7) * [1; 0] + sqrt(2 / 7) * [0; 1];  
@@ -26,10 +26,16 @@ ctr = 1;
 % Realizable case:
 % Generate b_t = Tr(E_t * rho), assume that this value is Normally distributed
 % with mu = 0 and sigma = 1
-
+    mxd = .00000000000000001;
+    
     bs = [];
     for j = 1:ctr - 1
-        bs = [bs trace(Es{j} * rho) + normrnd(2, 2)];
+        v1 = trace(Es{j} * rho);
+        v2 = normrnd(0, .5);
+        if mxd < 2 * abs(v1 - v2)
+            mxd = 2 * abs(v1 - v2);
+        end
+        bs = [bs v1 + v2];
     end
 % finished generating errors b_t
 
@@ -38,5 +44,9 @@ ctr = 1;
 
 % Non-realizable case:
 % Generate b_t arbitrarily
+
+
+
+L = mxd;
 
 end
