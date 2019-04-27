@@ -1,4 +1,4 @@
-function [Es, bs, rho, L] = generate_data(s)
+function [Es, bs, rho, L] = generate_data(s, rndmin, rndsd, eps)
 
 % Generate test state
 psi = sqrt(5 / 7) * [1; 0] + sqrt(2 / 7) * [0; 1];  
@@ -24,18 +24,18 @@ ctr = 1;
 % finished generating measurement operators
 
 % Realizable case:
-% Generate b_t = Tr(E_t * rho), assume that this value is Normally distributed
-% with mu = 0 and sigma = 1
-    mxd = .00000000000000001;
+% Generate b_t = Tr(E_t * rho), these values are in eps/3 >= bt >= -(eps/3)
+% range
+
     
     bs = [];
     for j = 1:ctr - 1
+        
         v1 = trace(Es{j} * rho);
-        v2 = normrnd(0, .5);
-        if mxd < 2 * abs(v1 - v2)
-            mxd = 2 * abs(v1 - v2);
-        end
-        bs = [bs v1 + v2];
+        a = -((eps/3) - v1);
+        b = (eps/3) - v1;
+        bt = (b-a).*rand(1,1) + a; % random uniform sampling from that range
+        bs = [bs bt];
     end
 % finished generating errors b_t
 
@@ -47,6 +47,6 @@ ctr = 1;
 
 
 
-L = mxd;
+L = 1;
 
 end
