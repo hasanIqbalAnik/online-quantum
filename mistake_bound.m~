@@ -1,10 +1,13 @@
+mistakes = [];
+upper_bounds = [];
 
-eps = .3; % u
-[Es, bs, rho, L] = generate_dt_regret(100, eps);
+for eps = .2:.08:.4
+    
+[Es, bs, rho, L] = generate_dt_regret(100, eps); % generate necessary data
 [xtra, T] = size(Es); % number of rounds
-n = 1;
-curpred = (2 ^ (- n)) * eye(2 ^ n);
-num_mistake = 0;
+n = 1; % number of qubits
+curpred = (2 ^ (- n)) * eye(2 ^ n); % maximally mixed prediction
+num_mistake = 0; % cound number of mistakes
 
 for i=1:T
     if abs(trace(Es{i} *curpred) - trace(Es{i} * rho)) > eps
@@ -13,10 +16,18 @@ for i=1:T
     end
 end
 
-num_mistake
-(1/eps^2)
-curpred
-rho
 
+mistakes = [mistakes num_mistake];
+upper_bounds = [upper_bounds 1/(eps^2)];
 
+end
 
+mistakes
+upper_bounds
+plot(mistakes);
+hold on
+plot(upper_bounds);
+
+xlabel('e values')
+ylabel('bounds')
+legend('upper bound','result bound')

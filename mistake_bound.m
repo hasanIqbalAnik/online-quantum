@@ -1,4 +1,8 @@
-eps = .3; % user defined epsilon
+mistakes = [];
+upper_bounds = [];
+
+for eps = .2:.01:.33
+    
 [Es, bs, rho, L] = generate_dt_regret(100, eps); % generate necessary data
 [xtra, T] = size(Es); % number of rounds
 n = 1; % number of qubits
@@ -13,10 +17,16 @@ for i=1:T
 end
 
 
-num_mistake
-(1/eps^2)
-curpred
-rho
+mistakes = [mistakes num_mistake];
+upper_bounds = [upper_bounds 1/(eps^2)];
 
+end
 
+mistakes
+upper_bounds
+plot(mistakes);
+hold on
+plot(upper_bounds);
 
+xlabel('eps values')
+ylabel('bounds')

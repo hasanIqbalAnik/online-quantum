@@ -12,29 +12,46 @@
 % Cn is the set of all trace-1 positive semi-definite complex matrices of
 % dimension 2^n
 
+regrets = [];
+bounds = [];
 
-[Es, bs, rho, L] = generate_dt_regret(100);
+% for i = 1:10
+%     [Es, bs, rho, L] = generate_dt_regret(100);
+% 
+%     [xtra, T] = size(Es); % number of rounds
+%     n = 1;
+% 
+% 
+%     eta = .2; % random eta
+%     curpred = (2 ^ (- n)) * eye(2 ^ n); % current random prediction
+%     pd = RFTL(Es, bs, T, eta, curpred) % best prediction
+%     rho % true state
+% 
+%     regrets = [regrets calculate_regret(bs, Es, rho, pd, T)] % calculate regret
+%     bounds = [bounds sqrt(T * n)]; % theoretical bound
+%     
+% end
 
 
-[xtra, T] = size(Es); % number of rounds
-n = 1;
+for i = 1:10
 
+    [Es, bs, rho, L] = generate_dt_regret(100);
 
-
-
-eta = .2; % random eta
-curpred = (2 ^ (- n)) * eye(2 ^ n); % current random prediction
-pd = RFTL(Es, bs, T, eta, curpred) % best prediction
-rho % true state
-
-calculate_regret(bs, Es, rho, pd, T) % calculate regret
-sqrt(T * n) % theoretical bound
-
+    [xtra, T] = size(Es); % number of rounds
+    n = 1;
 
 eta = sqrt((log(2) * n) / (2 * T * (L^2))); % eta from theorem
 curpred = (2 ^ (- n)) * eye(2 ^ n); % current prediction
-pd = RFTL(Es, bs, T, eta, curpred) % best prediction
-rho % true state
+pd = RFTL(Es, bs, T, eta, curpred); % best prediction
+rho; % true state
 
-calculate_regret(bs, Es, rho, pd, T) % calculate regret
-2 * 1 * sqrt(2 * log(2)) % theoretical bound
+regrets = [regrets calculate_regret(bs, Es, rho, pd, T)] % calculate regret
+bounds = [bounds 2 * 1 * sqrt(2 * log(2) * T)]; % theoretical bound
+    
+end
+
+plot(regrets)
+hold on
+plot(bounds)
+xlabel('rounds')
+ylabel('bounds')
