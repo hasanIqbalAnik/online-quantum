@@ -1,5 +1,5 @@
-function pred = RFTL(Es, bs, T, eta, n, rho, curpred)
 
+function pred = RFTL(Es, bs, T, eta, curpred)
 for i = 1:T
     
     cvx_begin quiet
@@ -10,7 +10,6 @@ for i = 1:T
     cvx_end
     
     curpred = x;
- 
 end
 pred = curpred;
 end

@@ -23,18 +23,18 @@ n = 1;
 
 
 eta = .2; % random eta
-curpred = (2 ^ (- n)) * eye(2 ^ n);
-pd = RFTL(Es, bs, T, eta, n, rho, curpred) % best prediction
+curpred = (2 ^ (- n)) * eye(2 ^ n); % current random prediction
+pd = RFTL(Es, bs, T, eta, curpred) % best prediction
 rho % true state
 
-calculate_regret(bs, Es, rho, pd, T)
-sqrt(T * n)
+calculate_regret(bs, Es, rho, pd, T) % calculate regret
+sqrt(T * n) % theoretical bound
 
 
-eta = sqrt((log(2) * n) / (2 * T * (L^2)));
-curpred = (2 ^ (- n)) * eye(2 ^ n);
-pd = RFTL(Es, bs, T, eta, n, rho, curpred) % best prediction
+eta = sqrt((log(2) * n) / (2 * T * (L^2))); % eta from theorem
+curpred = (2 ^ (- n)) * eye(2 ^ n); % current prediction
+pd = RFTL(Es, bs, T, eta, curpred) % best prediction
 rho % true state
 
-calculate_regret(bs, Es, rho, pd, T)
-2 * 1 * sqrt(2 * log(2))
+calculate_regret(bs, Es, rho, pd, T) % calculate regret
+2 * 1 * sqrt(2 * log(2)) % theoretical bound
